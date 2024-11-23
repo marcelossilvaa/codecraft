@@ -4,6 +4,7 @@ import { useState } from "react";
 import Code from "@/public/code.png";
 import Book from "@/public/book.png";
 import Bau from "@/public/bau.png";
+import Start from "@/public/start.png";
 
 interface Lesson {
   level: number;
@@ -19,7 +20,7 @@ const dataUnits: Unit[] = [
   {
     unidade: 1,
     licoes: [
-      { level: 1, image: Code },
+      { level: 1, image: Start },
       { level: 2, image: Book },
       { level: 3, image: Bau },
       { level: 4, image: Code },
@@ -63,7 +64,6 @@ const LessonNode = ({ lesson, onClick }: LessonNodeProps) => (
       alt={`Lição ${lesson.level}`}
       width={80}
       height={80}
-      className="rounded-full"
     />
   </div>
 );
