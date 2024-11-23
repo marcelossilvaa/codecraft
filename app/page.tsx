@@ -1,101 +1,160 @@
-import Image from "next/image";
+"use client";
+import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
+import Code from "@/public/code.png";
+import Book from "@/public/book.png";
+import Bau from "@/public/bau.png";
+
+interface Lesson {
+  level: number;
+  image: StaticImageData;
+}
+
+interface Unit {
+  unidade: number;
+  licoes: Lesson[];
+}
+
+const dataUnits: Unit[] = [
+  {
+    unidade: 1,
+    licoes: [
+      { level: 1, image: Code },
+      { level: 2, image: Book },
+      { level: 3, image: Bau },
+      { level: 4, image: Code },
+      { level: 5, image: Code },
+    ],
+  },
+  {
+    unidade: 2,
+    licoes: [
+      { level: 6, image: Code },
+      { level: 7, image: Code },
+      { level: 8, image: Code },
+      { level: 9, image: Code },
+      { level: 10, image: Code },
+    ],
+  },
+  {
+    unidade: 3,
+    licoes: [
+      { level: 11, image: Code },
+      { level: 12, image: Code },
+      { level: 13, image: Code },
+      { level: 14, image: Code },
+      { level: 15, image: Code },
+    ],
+  },
+];
+
+interface LessonNodeProps {
+  lesson: Lesson;
+  onClick: (lesson: Lesson) => void;
+}
+
+const LessonNode = ({ lesson, onClick }: LessonNodeProps) => (
+  <div
+    onClick={() => onClick(lesson)}
+    className="lesson-node flex flex-col items-center mx-2 cursor-pointer"
+  >
+    <Image
+      src={lesson.image}
+      alt={`Lição ${lesson.level}`}
+      width={80}
+      height={80}
+      className="rounded-full"
+    />
+  </div>
+);
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleLessonClick = (lesson: Lesson) => {
+    setSelectedLesson(lesson);
+  };
+
+  const handleBackToLessons = () => {
+    setSelectedLesson(null);
+  };
+
+  return (
+    <div className="mt-10 w-full flex flex-col items-center">
+      <h1 className="text-2xl font-bold mb-4">CodeCraft</h1>
+
+      {selectedLesson ? (
+        <div className="lesson-content w-full max-w-md p-4">
+          <h2 className="text-xl font-semibold mb-4">
+            Conteúdo da Lição {selectedLesson.level}
+          </h2>
+          <p>
+            Este é o conteúdo da Lição {selectedLesson.level}. Aqui você pode
+            adicionar exercícios, explicações, exemplos de código ou qualquer
+            outro conteúdo relevante para esta lição.
+          </p>
+          <button
+            onClick={handleBackToLessons}
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Voltar às Lições
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : (
+        <div className="units-container flex flex-col items-center">
+          {dataUnits.map((unit, unitIndex) => (
+            <div key={unitIndex} className="unit w-full mb-8">
+              <h2 className="text-xl text-center font-semibold mb-4">
+                Unidade {unit.unidade}
+              </h2>
+              <div className="lessons-container">
+                {unit.licoes.map((lesson, index) => {
+                  let alignmentClass = "justify-center";
+                  let paddingClass = "";
+
+                  const isEvenUnit = unit.unidade % 2 === 0;
+
+                  if (!isEvenUnit) {
+                    if (index === 1) {
+                      alignmentClass = "";
+                      paddingClass = "pl-24";
+                    } else if (index === 2) {
+                      alignmentClass = "justify-end";
+                      paddingClass = "pl-32";
+                    } else if (index === 3) {
+                      alignmentClass = "";
+                      paddingClass = "pl-24";
+                    }
+                  } else {
+                    if (index === 1) {
+                      alignmentClass = "flex-row-reverse";
+                      paddingClass = "pr-24";
+                    } else if (index === 2) {
+                      alignmentClass = "justify-start";
+                      paddingClass = "pr-32";
+                    } else if (index === 3) {
+                      alignmentClass = "flex-row-reverse";
+                      paddingClass = "pr-24";
+                    }
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className={`lesson-row flex items-center my-4 ${alignmentClass} ${paddingClass}`}
+                    >
+                      <LessonNode
+                        lesson={lesson}
+                        onClick={handleLessonClick}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
