@@ -203,8 +203,8 @@ export default function Home() {
           </div>
         </div>
         
-      <div className='flex justify-center'>
-        <div className='bg-white fixed h-16 bottom-10 w-[311px] left-[340px] shadow-2xl rounded-3xl flex'>
+      <div className='fixed bottom-10 flex justify-center'>
+        <div className='bg-white  h-16  w-[311px] left-[31%] shadow-2xl rounded-3xl flex'>
           <div className='flex justify-around w-full py-2 items-center'>
             <Image src={HomeIcon} alt='Home' width={48} height={48} className='h-[48px]'></Image>
             <Image src={Chart} alt='Home' width={48} height={48} className='h-[30px] w-[30px]'></Image>
